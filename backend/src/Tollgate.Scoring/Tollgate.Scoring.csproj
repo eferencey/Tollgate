@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tollgate.Domain\Tollgate.Domain.csproj" />
+  </ItemGroup>
+
+  <!-- The look-alike helpers are internal on purpose (nothing else should depend on them) but deserve direct unit tests. -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="Tollgate.Scoring.Tests" />
+  </ItemGroup>
+
+</Project>

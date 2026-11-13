@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" class="dark" style="color-scheme: dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="description" content="Check a link before you pass through it. One explainable trust score from four threat-intelligence sources." />
+    <title>Tollgate</title>
+    <!-- Sets the theme before first paint so a light-mode visitor never sees a dark flash.
+         Same key and rule as src/app/theme/theme.ts: keep them in step. -->
+    <script>
+      try {
+        var stored = localStorage.getItem('tollgate-theme')
+        var light = stored === 'light' || (stored !== 'dark' && matchMedia('(prefers-color-scheme: light)').matches)
+        document.documentElement.classList.toggle('dark', !light)
+        document.documentElement.style.colorScheme = light ? 'light' : 'dark'
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

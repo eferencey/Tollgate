@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="11.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="11.0.0" />
+  </ItemGroup>
+
+  <!-- Tests read the real Api configuration so they verify the shipped numbers, not a copy of them. -->
+  <ItemGroup>
+    <Content Include="..\..\src\Tollgate.Api\appsettings.json" Link="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Tollgate.Scoring\Tollgate.Scoring.csproj" />
+    <ProjectReference Include="..\..\src\Tollgate.Domain\Tollgate.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

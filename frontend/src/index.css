@@ -1,0 +1,172 @@
+/*
+ * Tollgate design tokens: the single source for colour, type, radius and motion.
+ * Concept "instrument panel": neutral graphite and bone, colour only ever means a verdict.
+ * The /design route shows these tokens live.
+ */
+@import "tailwindcss";
+@import "@fontsource-variable/archivo/wdth.css";
+@import "@fontsource-variable/jetbrains-mono";
+
+/* Dark mode = the `dark` class on <html>, set by app/theme before first paint. */
+@custom-variant dark (&:is(.dark *));
+
+/* Tokens -> Tailwind utilities (bg-safe, text-muted-foreground, font-mono, ...). */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Verdict colours: the only saturated colours in the product. */
+  --color-safe: var(--safe);
+  --color-suspicious: var(--suspicious);
+  --color-dangerous: var(--dangerous);
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+
+  /* Type pairing: Archivo for words (headings use its condensed width), JetBrains Mono for data and labels. */
+  --font-sans: "Archivo Variable", system-ui, sans-serif;
+  --font-heading: var(--font-sans);
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "Cascadia Mono", monospace;
+
+  /* Two sizes beyond Tailwind's scale: the score numeral and the small caps instrument label. */
+  --text-display: 5.5rem;
+  --text-display--line-height: 1;
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1rem;
+  --text-label--letter-spacing: 0.1em;
+
+  --ease-instrument: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Light theme ("paper"). Verdict colours are darker here so they still pass 4.5:1 on paper. */
+:root {
+  --background: #f3f0e6;
+  --foreground: #1a1a17;
+  --card: #faf8f1;
+  --card-foreground: #1a1a17;
+  --popover: #faf8f1;
+  --popover-foreground: #1a1a17;
+  --primary: #1a1a17;
+  --primary-foreground: #f3f0e6;
+  --secondary: #e9e5d6;
+  --secondary-foreground: #1a1a17;
+  --muted: #e9e5d6;
+  --muted-foreground: #66634f;
+  --accent: #e2ddca;
+  --accent-foreground: #1a1a17;
+  --destructive: #bf3a26;
+  --border: #c9c3ae;
+  --input: #8a8672; /* form-field edges need 3:1, unlike decorative borders */
+  --ring: #1a1a17;
+
+  --safe: #1e7a46;
+  --suspicious: #8f6200;
+  --dangerous: #bf3a26;
+
+  /* Silk background (components/brand/SilkField): shadow, body, fold, highlight. Neutral only; ink text must stay >= 4.5:1 on all four. */
+  --silk-0: #c0b9a2;
+  --silk-1: #d3ccb7;
+  --silk-2: #dfd9c5;
+  --silk-3: #e9e4d1; /* kept clearly darker than --card (#faf8f1) so cards stand out from the cloth */
+
+  --radius: 0.25rem;
+}
+
+/* Dark theme ("graphite"): the designed-first, default look. */
+.dark {
+  --background: #0f0f0d;
+  --foreground: #ece8dc; /* bone */
+  --card: #171715;
+  --card-foreground: #ece8dc;
+  --popover: #171715;
+  --popover-foreground: #ece8dc;
+  --primary: #ece8dc;
+  --primary-foreground: #0f0f0d;
+  --secondary: #1f1f1c;
+  --secondary-foreground: #ece8dc;
+  --muted: #1f1f1c;
+  --muted-foreground: #a09d90;
+  --accent: #272722;
+  --accent-foreground: #ece8dc;
+  --destructive: #e5533d;
+  --border: #2e2d28;
+  --input: #77746a;
+  --ring: #ece8dc;
+
+  --safe: #5dbb82;
+  --suspicious: #e9b23f;
+  --dangerous: #e5533d;
+
+  /* Same four silk colours for graphite; bone text must stay >= 4.5:1 on all four. */
+  --silk-0: #0b0b0a;
+  --silk-1: #232320;
+  --silk-2: #3a3933;
+  --silk-3: #5e5c53; /* brightest pixel: bone text 5.4:1 */
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply heading-type;
+  }
+}
+
+/* Headings are condensed and heavy, like road-sign lettering. Condensed type needs extra word space to stay readable.
+   A utility (not just an h1-h3 rule) so the wordmark can wear exactly the same type. */
+@utility heading-type {
+  @apply font-heading font-extrabold;
+  font-stretch: 75%;
+  letter-spacing: -0.005em;
+  word-spacing: 0.1em;
+}
+
+/* Small caps label in mono: the voice of every instrument caption ("SCORE", "SOURCE"). */
+@utility label-caps {
+  @apply font-mono text-label font-medium uppercase;
+  letter-spacing: var(--text-label--letter-spacing);
+}
+
+/* A text link a thumb can hit: at least 44 px tall on a phone (WCAG target size, comfortable level), compact from sm,
+   with the same focus ring as the buttons so keyboard focus looks identical everywhere. */
+@utility touch-link {
+  @apply inline-flex min-h-11 items-center underline underline-offset-4 outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring sm:min-h-8;
+}
+
+/* Motion is purposeful (score reveal, barrier arm); users who ask for less get none of it. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Tollgate.Providers\Tollgate.Providers.csproj" />
+    <ProjectReference Include="..\..\src\Tollgate.Domain\Tollgate.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

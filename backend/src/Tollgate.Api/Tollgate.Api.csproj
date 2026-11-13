@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tollgate.Application\Tollgate.Application.csproj" />
+    <ProjectReference Include="..\Tollgate.Infrastructure\Tollgate.Infrastructure.csproj" />
+    <ProjectReference Include="..\Tollgate.Providers\Tollgate.Providers.csproj" />
+    <ProjectReference Include="..\Tollgate.Scoring\Tollgate.Scoring.csproj" />
+    <ProjectReference Include="..\Tollgate.Domain\Tollgate.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.15">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="11.0.0" />
+  </ItemGroup>
+
+</Project>
